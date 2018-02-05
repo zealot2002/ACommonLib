@@ -15,7 +15,10 @@ dependencies {
     compile "com.android.support:appcompat-v7:26.0.2"
     //事件总线
     compile 'com.hwangjr.rxbus:rxbus:1.0.3'
-
-    //    ok http
+    //ok http
     compile 'com.squareup.okhttp3:okhttp:3.4.2'
+    //权限适配
+    compile 'com.lovedise:permissiongen:0.0.6'
+    //屏幕适配
+    compile 'com.zhy:autolayout:1.4.5'
 }
