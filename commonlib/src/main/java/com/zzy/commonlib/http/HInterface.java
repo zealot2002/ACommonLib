@@ -4,7 +4,7 @@ import org.json.JSONException;
 
 public interface HInterface {
     interface DataCallback{
-        void requestCallback(int result, Object data, Object tagData);
+        void requestCallback(boolean bResult, final Object data, Object tagData);
     }
 
     interface JsonParser {
