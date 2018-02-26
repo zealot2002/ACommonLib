@@ -78,7 +78,7 @@ public class HProxy {
                     if(ctx.getJsonParser()!=null){
                         Object[] tmpObjs = ctx.getJsonParser().parse(retString);
                         objs[0] = tmpObjs[0];
-                        objs[1] = tmpObjs[1];
+                        objs[1] = tmpObjs[1];  
                         if(objs[0].equals(HConstant.SUCCESS)){
                             if(ctx.getValidator()!=null){
                                 ctx.getValidator().validate(objs[1]);
