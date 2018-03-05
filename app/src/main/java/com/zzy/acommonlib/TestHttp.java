@@ -30,6 +30,7 @@ public class TestHttp {
         RequestCtx ctx = new RequestCtx.Builder(url)
                 .params(map)
                 .method(HTTP_METHOD_GET)
+                .contentType("")
                 .callback(callback)
                 .jsonParser(getDataJsonParser)
                 .timerout(10*1000)
@@ -48,7 +49,8 @@ public class TestHttp {
         RequestCtx ctx = new RequestCtx.Builder(url)
                 .method(HTTP_METHOD_POST)
                 .headerMap(headerMap)
-                .body("")
+                .body(body)
+                .contentType("text/plain")
                 .callback(callback)
                 .jsonParser(getDataJsonParser)
                 .timerout(10*1000)
@@ -73,7 +75,7 @@ public class TestHttp {
         public Object[] parse(String str) throws JSONException {
             JSONTokener jsonParser = new JSONTokener(str);
             JSONObject obj = (JSONObject) jsonParser.nextValue();
-            int errorCode = obj.getInt("err");
+            int errorCode = obj.getInt("code");
 
             return new Object[]{HConstant.SUCCESS, 1};
         }

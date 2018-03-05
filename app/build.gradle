@@ -13,6 +13,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(':commonlib')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':commonlib')
 }

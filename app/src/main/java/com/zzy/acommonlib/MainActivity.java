@@ -18,8 +18,8 @@ public class MainActivity extends Activity {
         btnGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                TestHttp.doTestPost();
-                TestHttp.doTestGet();
+                TestHttp.doTestPost();
+//                TestHttp.doTestGet();
             }
         });
 

@@ -13,7 +13,7 @@ import java.util.Map;
 public class HUtils {
     public static Map<String, String> getCommonHeader(){
         Map<String, String> headerMap = new LinkedHashMap<String, String>();
-        headerMap.put("Content-Type","text/plain");
+//        headerMap.put("Content-Type","text/plain");
         headerMap.put("device","android");
 //        headerMap.put("token","");
         Log.e("zzy","header:"+headerMap.toString());
@@ -26,7 +26,7 @@ public class HUtils {
                 "        \"platform\": \"app\",\n" +
                 "        \"data\": {");
         sb.append("\"pageNum\":"+pageNum+",");
-        sb.append("\"pageType\":\""+action+"\"");
+        sb.append("\"pageCode\":\""+action+"\"");
         sb.append("}}");
 
         Log.e("zzy","body:"+sb.toString());

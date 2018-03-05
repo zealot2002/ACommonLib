@@ -13,8 +13,7 @@ import okhttp3.Response;
 
 /*http 适配层 :  okhttp in use*/
 public class HAdapter {
-    public static final MediaType CONTENT_TYPE
-            = MediaType.parse("text/plain");
+//    public static final MediaType CONTENT_TYPE = MediaType.parse("text/plain");
 
 /*******************************************************************************************************/
     public static String sendGetRequest(RequestCtx ctx) throws Exception {
@@ -55,12 +54,12 @@ public class HAdapter {
             request = new Request.Builder()
                     .url(ctx.getUrl())
                     .headers(Headers.of(ctx.getHeaderMap()))
-                    .post(RequestBody.create(CONTENT_TYPE,ctx.getBody().toString()))
+                    .post(RequestBody.create(MediaType.parse(ctx.getContentType()),ctx.getBody().toString()))
                     .build();
         }else{
             request = new Request.Builder()
                     .url(ctx.getUrl())
-                    .post(RequestBody.create(CONTENT_TYPE,ctx.getBody().toString()))
+                    .post(RequestBody.create(MediaType.parse(ctx.getContentType()),ctx.getBody().toString()))
                     .build();
         }
         Response response = client.newCall(request).execute();

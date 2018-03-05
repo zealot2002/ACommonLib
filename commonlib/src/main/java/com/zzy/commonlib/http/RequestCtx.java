@@ -11,6 +11,7 @@ public class RequestCtx {
     private final String method;
     private final LinkedHashMap<String, String> params;
     private final String body;
+    private final String contentType;
     private final HInterface.JsonParser jsonParser;
     private final HInterface.Validator validator;
     private final HInterface.DataCallback callback;
@@ -24,6 +25,7 @@ public class RequestCtx {
         method = b.method;
         params = b.params;
         body = b.body;
+        contentType = b.contentType;
         jsonParser = b.jsonParser;
         validator = b.validator;
         callback = b.callback;
@@ -47,6 +49,10 @@ public class RequestCtx {
 
     public String getBody() {
         return body;
+    }
+
+    public String getContentType() {
+        return contentType;
     }
 
     public HInterface.JsonParser getJsonParser() {
@@ -82,6 +88,7 @@ public class RequestCtx {
         private String method;
         private LinkedHashMap<String, String> params;
         private String body;
+        private String contentType;
         private HInterface.JsonParser jsonParser;
         private HInterface.Validator validator;
         private HInterface.DataCallback callback;
@@ -107,6 +114,11 @@ public class RequestCtx {
 
         public Builder body(String val) {
             body = val;
+            return this;
+        }
+
+        public Builder contentType(String val) {
+            contentType = val;
             return this;
         }
 
