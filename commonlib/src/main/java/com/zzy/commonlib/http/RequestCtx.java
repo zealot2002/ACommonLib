@@ -10,6 +10,7 @@ public class RequestCtx {
     private final String url;
     private final String method;
     private final LinkedHashMap<String, String> params;
+    private final String body;
     private final HInterface.JsonParser jsonParser;
     private final HInterface.Validator validator;
     private final HInterface.DataCallback callback;
@@ -22,6 +23,7 @@ public class RequestCtx {
         url = b.url;
         method = b.method;
         params = b.params;
+        body = b.body;
         jsonParser = b.jsonParser;
         validator = b.validator;
         callback = b.callback;
@@ -41,6 +43,10 @@ public class RequestCtx {
 
     public LinkedHashMap<String, String> getParams() {
         return params;
+    }
+
+    public String getBody() {
+        return body;
     }
 
     public HInterface.JsonParser getJsonParser() {
@@ -75,6 +81,7 @@ public class RequestCtx {
         private String url;
         private String method;
         private LinkedHashMap<String, String> params;
+        private String body;
         private HInterface.JsonParser jsonParser;
         private HInterface.Validator validator;
         private HInterface.DataCallback callback;
@@ -83,13 +90,8 @@ public class RequestCtx {
         private int timerout;
         private Object tagObj;
 
-        public Builder(LinkedHashMap<String, String> params) {
-            this.params = params;
-        }
-
-        public Builder url(String val) {
-            url = val;
-            return this;
+        public Builder(String url) {
+            this.url = url;
         }
 
         public Builder method(String val) {
@@ -97,18 +99,14 @@ public class RequestCtx {
             return this;
         }
 
-        public Builder methodAndUrl(String method, String url) {
-            this.method = method;
-            if (method.equals(HConstant.HTTP_METHOD_GET)) {
-                this.url = jointUrl(params, url);
-            } else {
-                this.url = url;
-            }
+        public Builder params(LinkedHashMap<String, String> val){
+            params = val;
+            this.url = jointUrl(params, url);
             return this;
         }
 
-        public Builder params(LinkedHashMap<String, String> val) {
-            params = val;
+        public Builder body(String val) {
+            body = val;
             return this;
         }
 

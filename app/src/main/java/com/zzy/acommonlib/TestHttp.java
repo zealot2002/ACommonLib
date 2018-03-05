@@ -10,8 +10,10 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static com.zzy.commonlib.http.HConstant.HTTP_METHOD_GET;
+import static com.zzy.commonlib.http.HConstant.HTTP_METHOD_POST;
 
 /**
  * @author zzy
@@ -19,14 +21,34 @@ import static com.zzy.commonlib.http.HConstant.HTTP_METHOD_GET;
  */
 
 public class TestHttp {
-    public static void doTest(){
+    public static void doTestGet() {
         LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
         map.put("city","北京");
 
         String url = "http://www.sojson.com/open/api/weather/json.shtml";
 
-        RequestCtx ctx = new RequestCtx.Builder(map)
-                .methodAndUrl(HTTP_METHOD_GET, url)
+        RequestCtx ctx = new RequestCtx.Builder(url)
+                .params(map)
+                .method(HTTP_METHOD_GET)
+                .callback(callback)
+                .jsonParser(getDataJsonParser)
+                .timerout(10*1000)
+                .build();
+        try {
+            HProxy.getInstance().request(ctx);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static void doTestPost(){
+        String url = "http://10.100.19.167/csc-api";
+        Map<String, String> headerMap = HUtils.getCommonHeader();
+        String body = HUtils.getBody(1,"homePage");
+
+        RequestCtx ctx = new RequestCtx.Builder(url)
+                .method(HTTP_METHOD_POST)
+                .headerMap(headerMap)
+                .body("")
                 .callback(callback)
                 .jsonParser(getDataJsonParser)
                 .timerout(10*1000)

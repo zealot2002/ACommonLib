@@ -13,8 +13,8 @@ import okhttp3.Response;
 
 /*http 适配层 :  okhttp in use*/
 public class HAdapter {
-    public static final MediaType MEDIA_TYPE_JSON
-            = MediaType.parse("application/json; charset=utf-8");
+    public static final MediaType CONTENT_TYPE
+            = MediaType.parse("text/plain");
 
 /*******************************************************************************************************/
     public static String sendGetRequest(RequestCtx ctx) throws Exception {
@@ -50,11 +50,19 @@ public class HAdapter {
                 .writeTimeout(ctx.getTimerout(),TimeUnit.SECONDS)
                 .build();
 
-        Request request = new Request.Builder()
-                .url(ctx.getUrl())
-                .post(RequestBody.create(MEDIA_TYPE_JSON,ctx.getParams().toString()))
-                .build();
-
+        Request request;
+        if(ctx.getHeaderMap()!=null){
+            request = new Request.Builder()
+                    .url(ctx.getUrl())
+                    .headers(Headers.of(ctx.getHeaderMap()))
+                    .post(RequestBody.create(CONTENT_TYPE,ctx.getBody().toString()))
+                    .build();
+        }else{
+            request = new Request.Builder()
+                    .url(ctx.getUrl())
+                    .post(RequestBody.create(CONTENT_TYPE,ctx.getBody().toString()))
+                    .build();
+        }
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful())
             throw new IOException("Unexpected code " + response);
@@ -80,5 +88,4 @@ public class HAdapter {
             return HConstant.HTTP_ERROR + statusCode;
         }
     }
-
 }
