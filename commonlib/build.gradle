@@ -13,6 +13,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
     //事件总线
     compile 'com.hwangjr.rxbus:rxbus:1.0.3'
     //ok http

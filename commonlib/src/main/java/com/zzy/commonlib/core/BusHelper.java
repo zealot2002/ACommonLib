@@ -1,10 +1,6 @@
 package com.zzy.commonlib.core;
 
-import android.os.Handler;
-
 import com.hwangjr.rxbus.Bus;
-
-
 public final class BusHelper {
     private Bus bus;
     private static class Holder {
@@ -13,7 +9,7 @@ public final class BusHelper {
     private BusHelper() {
         bus = new Bus();
     }
-    public static BusHelper getInstance() {
-        return Holder.instance;
+    public static Bus getBus() {
+        return Holder.instance.bus;
     }
 }
