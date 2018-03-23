@@ -58,7 +58,7 @@ public class HProxy {
             Object[] objs = new Object[3]; //0:成功还是失败；1:数据；2:请求者携带tag
             objs[2] = ctx.getTagObj();
             try {
-                Log.e(TAG,"请求服务 url:"+ctx.getUrl());
+//                Log.e(TAG,"请求服务 url:"+ctx.getUrl());
                 if(ctx.getMethod().equals(HConstant.HTTP_METHOD_GET)){
                     retString = HAdapter.sendGetRequest(ctx);
                 }else if(ctx.getMethod().equals(HConstant.HTTP_METHOD_POST)){
@@ -68,7 +68,7 @@ public class HProxy {
                 }else if(ctx.getMethod().equals(HConstant.HTTP_METHOD_DEL)){
                     retString = HAdapter.sendDelRequest(ctx);
                 }*/
-                Log.e(TAG,"服务返回数据:"+retString);
+//                Log.e(TAG,"服务返回数据:"+retString);
                 if(retString.equals(HConstant.HTML_DATA_ERROR)
                         ||retString.equals(HConstant.EMPTY_DATA_ERROR)
                         ||retString.contains(HConstant.HTTP_ERROR)){

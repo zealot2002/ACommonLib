@@ -13,6 +13,10 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class ThreadPool {
+    final int NUMBER_OF_CORES = Runtime.getRuntime().availableProcessors();
+    final int KEEP_ALIVE_TIME = 1;
+    final TimeUnit KEEP_ALIVE_TIME_UNIT = TimeUnit.SECONDS;
+
     private static final ThreadPool ourInstance = new ThreadPool();
 
     private ExecutorService pool;
@@ -21,11 +25,11 @@ public class ThreadPool {
     }
 
     private ThreadPool() {
-        pool = new ThreadPoolExecutor(5,
-                20,
-                0L,
-                TimeUnit.MILLISECONDS,
-                new LinkedBlockingDeque<Runnable>(128),
+        pool = new ThreadPoolExecutor(NUMBER_OF_CORES,
+                NUMBER_OF_CORES*4,
+                KEEP_ALIVE_TIME,
+                KEEP_ALIVE_TIME_UNIT,
+                new LinkedBlockingDeque<Runnable>(),
                 new ThreadPoolExecutor.AbortPolicy());
     }
     public ExecutorService getPool(){
