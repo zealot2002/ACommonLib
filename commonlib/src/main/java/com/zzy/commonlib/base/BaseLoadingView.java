@@ -19,7 +19,7 @@ public interface BaseLoadingView extends BaseView {
     void showLoadingError();
 
 /*  重新加载，子类复写  */
-    void reload();
+    void reload(boolean bShow);
 
 /*  绘制页面，子类复写  */
     void updateUI(Object o);
