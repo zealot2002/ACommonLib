@@ -69,6 +69,9 @@ public class HProxy {
                     retString = HAdapter.sendDelRequest(ctx);
                 }*/
 //                Log.e(TAG,"服务返回数据:"+retString);
+                if(ctx.getDecrypter()!=null){
+                    retString = ctx.getDecrypter().decrypt(retString);
+                }
                 if(retString.equals(HConstant.HTML_DATA_ERROR)
                         ||retString.equals(HConstant.EMPTY_DATA_ERROR)
                         ||retString.contains(HConstant.HTTP_ERROR)){
