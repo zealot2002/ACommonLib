@@ -17,7 +17,7 @@ import java.io.ObjectOutputStream;
  * SharePreferences 工具类
  */
 
-public class PreferenceHelper {
+public class SPUtils {
 
 
     public static boolean getBoolean(Context context, String key, boolean defValue) {
