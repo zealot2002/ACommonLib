@@ -3,6 +3,8 @@
     package="com.zzy.acommonlib">
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <meta-data android:name="design_width" android:value="1080"/>
+    <meta-data android:name="design_height" android:value="1920"/>
 
     <application
         android:allowBackup="true"

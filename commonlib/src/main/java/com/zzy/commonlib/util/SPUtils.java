@@ -18,8 +18,6 @@ import java.io.ObjectOutputStream;
  */
 
 public class SPUtils {
-
-
     public static boolean getBoolean(Context context, String key, boolean defValue) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         return settings.getBoolean(key, defValue);

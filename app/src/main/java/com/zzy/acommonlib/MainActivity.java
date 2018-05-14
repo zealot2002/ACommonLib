@@ -2,8 +2,11 @@ package com.zzy.acommonlib;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import com.zzy.commonlib.util.FileUtils;
 
 public class MainActivity extends Activity {
 
@@ -23,5 +26,7 @@ public class MainActivity extends Activity {
             }
         });
 
+        String s = FileUtils.readFileFromAssets(this,"mockServer.json");
+        Log.e("zzy",s);
     }
 }
