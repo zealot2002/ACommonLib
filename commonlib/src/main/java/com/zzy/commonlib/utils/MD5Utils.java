@@ -1,4 +1,4 @@
-package com.zzy.commonlib.util;
+package com.zzy.commonlib.utils;
 
 import java.io.FileInputStream;
 import java.io.InputStream;

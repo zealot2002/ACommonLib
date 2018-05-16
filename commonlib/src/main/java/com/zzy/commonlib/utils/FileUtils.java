@@ -1,4 +1,4 @@
-package com.zzy.commonlib.util;
+package com.zzy.commonlib.utils;
 
 import android.content.Context;
 import android.os.Environment;
@@ -14,11 +14,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * 文件相关工具类

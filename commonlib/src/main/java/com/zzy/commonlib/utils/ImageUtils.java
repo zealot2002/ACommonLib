@@ -1,4 +1,4 @@
-package com.zzy.commonlib.util;
+package com.zzy.commonlib.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;

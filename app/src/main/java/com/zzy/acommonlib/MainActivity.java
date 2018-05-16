@@ -6,9 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.zzy.commonlib.util.FileUtils;
+import com.zzy.commonlib.utils.FileUtils;
 
 public class MainActivity extends Activity {
+    private static final String TAG = "MainActivity";
 
     private Button btnGo;
 
