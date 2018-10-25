@@ -1,10 +1,17 @@
 package com.zzy.commonlib.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.util.Log;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 import java.util.Stack;
+
+import static android.content.Context.ACTIVITY_SERVICE;
 
 public class ActivityManager {
 
@@ -20,39 +27,20 @@ public class ActivityManager {
 
     private ActivityManager() {
     }
-
-    /**
-     * 添加指定Activity到堆栈
-     */
     public void addActivity(Activity activity) {
         if (activityStack == null) {
             activityStack = new Stack<Activity>();
         }
         activityStack.add(activity);
     }
-
-
-    /**
-     * 获取当前Activity
-     */
     public Activity currentActivity() {
         Activity activity = activityStack.lastElement();
         return activity;
     }
-
-
-    /**
-     * 结束当前Activity
-     */
     public void finishActivity() {
         Activity activity = activityStack.lastElement();
         finishActivity(activity);
     }
-
-
-    /**
-     * 结束指定的Activity
-     */
     public void finishActivity(Activity activity) {
         if (activity != null) {
             activityStack.remove(activity);
@@ -60,11 +48,6 @@ public class ActivityManager {
             activity = null;
         }
     }
-
-
-    /**
-     * 结束指定Class的Activity
-     */
     public void finishActivity(Class<?> cls) {
         for (Activity activity : activityStack) {
             if (activity.getClass().equals(cls)) {
@@ -73,11 +56,6 @@ public class ActivityManager {
             }
         }
     }
-
-
-    /**
-     * 结束全部的Activity
-     */
     public void finishAllActivity() {
         for (int i = 0, size = activityStack.size(); i < size; i++) {
             if (null != activityStack.get(i)) {
@@ -86,11 +64,6 @@ public class ActivityManager {
         }
         activityStack.clear();
     }
-
-
-    /**
-     * 退出应用程序
-     */
     public void exitApp(Context context) {
         Log.e("ActivityManager", "app exit" );
         try {
