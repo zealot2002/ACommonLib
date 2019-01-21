@@ -94,7 +94,7 @@ public class TestHttp {
             JSONObject obj = (JSONObject) jsonParser.nextValue();
             int errorCode = obj.getInt("code");
             if(errorCode == 400){
-                //go to login
+                //
                 return true;
             }
             return false;
