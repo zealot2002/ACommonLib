@@ -24,9 +24,7 @@ public class TestHttp {
     public static void doTestGet() {
         LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
         map.put("city","北京");
-
         String url = "http://172.30.14.146:3000/homePage";
-
         RequestCtx ctx = new RequestCtx.Builder(url)
                 .params(map)
                 .method(HTTP_METHOD_GET)
