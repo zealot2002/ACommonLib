@@ -78,6 +78,15 @@ public class HProxy {
                     hasException = true;
                     objs[1] = retString;
                 }else{
+                    //拦截
+                    if(ctx.getInterceptor()!=null
+                            &&ctx.getInterceptor().intercept(retString)
+                            ){
+                            //被拦截直接返回
+                            handler.sendMessage(handler.obtainMessage(HConstant.INTERCEPTED, objs));
+                            return;
+                    }
+                    //解析
                     if(ctx.getJsonParser()!=null){
                         Object[] tmpObjs = ctx.getJsonParser().parse(retString);
                         objs[0] = tmpObjs[0];

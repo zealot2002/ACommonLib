@@ -25,7 +25,7 @@ public class TestHttp {
         LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
         map.put("city","北京");
 
-        String url = "http://www.sojson.com/open/api/weather/json.shtml";
+        String url = "http://172.30.14.146:3000/homePage";
 
         RequestCtx ctx = new RequestCtx.Builder(url)
                 .params(map)
@@ -33,6 +33,7 @@ public class TestHttp {
                 .contentType("")
                 .callback(callback)
                 .jsonParser(getDataJsonParser)
+                .interceptor(interceptor)
                 .timerout(10*1000)
                 .build();
         try {
@@ -53,6 +54,7 @@ public class TestHttp {
                 .contentType("text/plain")
                 .callback(callback)
                 .jsonParser(getDataJsonParser)
+                .interceptor(interceptor)
                 .timerout(10*1000)
                 .build();
         try {
@@ -67,6 +69,10 @@ public class TestHttp {
         public void requestCallback(int result, Object data, Object tagData) {
             if (result == HConstant.SUCCESS) {
 
+            }else if(result == HConstant.INTERCEPTED) {
+
+            }else{
+
             }
         }
     };
@@ -76,8 +82,23 @@ public class TestHttp {
             JSONTokener jsonParser = new JSONTokener(str);
             JSONObject obj = (JSONObject) jsonParser.nextValue();
             int errorCode = obj.getInt("code");
-
             return new Object[]{HConstant.SUCCESS, 1};
         }
     };
+
+    static HInterface.Interceptor interceptor = new HInterface.Interceptor() {
+
+        @Override
+        public boolean intercept(String str) throws Exception {
+            JSONTokener jsonParser = new JSONTokener(str);
+            JSONObject obj = (JSONObject) jsonParser.nextValue();
+            int errorCode = obj.getInt("code");
+            if(errorCode == 400){
+                //go to login
+                return true;
+            }
+            return false;
+        }
+    };
+
 }

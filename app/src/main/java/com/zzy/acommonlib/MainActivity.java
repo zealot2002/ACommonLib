@@ -30,7 +30,8 @@ public class MainActivity extends Activity{
         try{
 //            String currentActivity = ActivityManager.getInstance().currentActivity().toString();
 //            Log.e(TAG,"currentActivity: "+currentActivity);
-            Toast.makeText(ApplicationUtils.getApp(), "currentActivity:" , Toast.LENGTH_SHORT).show();
+//            Toast.makeText(ApplicationUtils.getApp(), "currentActivity:" , Toast.LENGTH_SHORT).show();
+            TestHttp.doTestGet();
         }catch(Exception e){
             e.printStackTrace();
         }

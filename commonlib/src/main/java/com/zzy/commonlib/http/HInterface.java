@@ -18,4 +18,8 @@ public interface HInterface {
     interface Validator {
         void validate(Object obj) throws NetDataInvalidException;
     }
+
+    interface Interceptor {
+        boolean intercept(String str) throws Exception;
+    }
 }

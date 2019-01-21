@@ -12,11 +12,12 @@ public class RequestCtx {
     private final LinkedHashMap<String, String> params;
     private final String body;
     private final String contentType;
+    private final Map<String, String> headerMap;
     private final HInterface.JsonParser jsonParser;
     private final HInterface.Validator validator;
     private final HInterface.DataCallback callback;
-    private final Map<String, String> headerMap;
     private final HInterface.Decrypter decrypter;
+    private final HInterface.Interceptor interceptor;
     private final int timerout;
     private final Object tagObj;
 
@@ -31,6 +32,7 @@ public class RequestCtx {
         callback = b.callback;
         headerMap = b.headerMap;
         decrypter = b.decrypter;
+        interceptor = b.interceptor;
         timerout = b.timerout;
         tagObj = b.tagObj;
     }
@@ -75,6 +77,10 @@ public class RequestCtx {
         return decrypter;
     }
 
+    public HInterface.Interceptor getInterceptor() {
+        return interceptor;
+    }
+
     public int getTimerout() {
         return timerout;
     }
@@ -94,6 +100,7 @@ public class RequestCtx {
         private HInterface.DataCallback callback;
         private Map<String, String> headerMap;
         private HInterface.Decrypter decrypter;
+        private HInterface.Interceptor interceptor;
         private int timerout;
         private Object tagObj;
 
@@ -129,6 +136,11 @@ public class RequestCtx {
 
         public Builder validator(HInterface.Validator val) {
             validator = val;
+            return this;
+        }
+
+        public Builder interceptor(HInterface.Interceptor val) {
+            interceptor = val;
             return this;
         }
 
