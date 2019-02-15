@@ -386,10 +386,10 @@ public final class AppUtils {
         void onActivityDestroyed(Activity activity);
     }
 
-    public void finishAllActivity() {
+    public static void finishAllActivity() {
         ACTIVITY_LIFECYCLE.mActivityList.clear();
     }
-    public void exitApp(Context context) {
+    public static void exitApp(Context context) {
         Log.e("ActivityManager", "app exit" );
         try {
             finishAllActivity();
