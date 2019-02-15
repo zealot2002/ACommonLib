@@ -68,7 +68,7 @@ public class TestHttp {
             if (result == HConstant.SUCCESS) {
 
             }else if(result == HConstant.INTERCEPTED) {
-
+                //do nothing
             }else{
 
             }
