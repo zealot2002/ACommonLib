@@ -6,8 +6,12 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.app.Application.ActivityLifecycleCallbacks;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
@@ -55,20 +59,6 @@ public final class AppUtils {
 
     private AppUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
-    }
-
-    /**
-     * Init utils.
-     * <p>Init it in the class of Application.</p>
-     *
-     * @param context context
-     */
-    public static void init(final Context context) {
-        if (context == null) {
-            init(getApplicationByReflect());
-            return;
-        }
-        init((Application) context.getApplicationContext());
     }
 
     /**
@@ -129,15 +119,15 @@ public final class AppUtils {
         throw new NullPointerException("u should init first");
     }
 
-    static ActivityLifecycleImpl getActivityLifecycle() {
+    private static ActivityLifecycleImpl getActivityLifecycle() {
         return ACTIVITY_LIFECYCLE;
     }
 
-    static LinkedList<Activity> getActivityList() {
+    private static LinkedList<Activity> getActivityList() {
         return ACTIVITY_LIFECYCLE.mActivityList;
     }
 
-    static Context getTopActivityOrApp() {
+    public static Context getTopActivityOrApp() {
         if (isAppForeground()) {
             Activity topActivity = ACTIVITY_LIFECYCLE.getTopActivity();
             return topActivity == null ? AppUtils.getApp() : topActivity;
@@ -146,7 +136,7 @@ public final class AppUtils {
         }
     }
 
-    static boolean isAppForeground() {
+    public static boolean isAppForeground() {
         ActivityManager am = (ActivityManager) AppUtils.getApp().getSystemService(Context.ACTIVITY_SERVICE);
         if (am == null) return false;
         List<ActivityManager.RunningAppProcessInfo> info = am.getRunningAppProcesses();
@@ -363,19 +353,6 @@ public final class AppUtils {
         }
     }
 
-    public static final class FileProvider4UtilCode extends FileProvider {
-
-        @Override
-        public boolean onCreate() {
-            AppUtils.init(getContext());
-            return true;
-        }
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    // interface
-    ///////////////////////////////////////////////////////////////////////////
-
     public interface OnAppStatusChangedListener {
         void onForeground();
 
@@ -396,6 +373,51 @@ public final class AppUtils {
             Runtime.getRuntime().exit(0);
         } catch (Exception e) {
             Log.e("ActivityManager", "app exit" + e.getMessage());
+        }
+    }
+    public static int getVersionCode() {
+        int verCode = -1;
+        try {
+            String packageName = sApplication.getPackageName();
+            verCode = sApplication.getPackageManager().getPackageInfo(packageName, 0).versionCode;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return verCode;
+    }
+    public static String getVersionName() {
+        String verName = "";
+        try {
+            String packageName = sApplication.getPackageName();
+            verName = sApplication.getPackageManager().getPackageInfo(packageName, 0).versionName;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return verName;
+    }
+
+    /**
+     * 获取设备的可用内存大小
+     *
+     * @param context 应用上下文对象context
+     * @return 当前内存大小
+     */
+    public static int getDeviceUsableMemory(Context context) {
+        ActivityManager am = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+        am.getMemoryInfo(mi);
+        // 返回当前系统的可用内存
+        return (int) (mi.availMem / (1024 * 1024));
+    }
+
+    public static void callPhone(Context context,String number) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + number));
+        try {
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

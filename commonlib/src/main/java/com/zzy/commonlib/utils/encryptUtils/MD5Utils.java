@@ -1,4 +1,4 @@
-package com.zzy.commonlib.utils;
+package com.zzy.commonlib.utils.encryptUtils;
 
 import java.io.FileInputStream;
 import java.io.InputStream;

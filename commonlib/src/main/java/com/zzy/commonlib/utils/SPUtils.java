@@ -26,7 +26,7 @@ public class SPUtils {
     public static void putBoolean(Context context, String key, boolean value) {
         Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean(key, value);
-        editor.commit();
+        editor.apply();
     }
 
     public static int getInt(Context context, String key, int defValue) {
@@ -37,7 +37,7 @@ public class SPUtils {
     public static void putInt(Context context, String key, int value) {
         Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putInt(key, value);
-        editor.commit();
+        editor.apply();
     }
 
     public static long getLong(Context context, String key, long defValue) {
@@ -49,7 +49,7 @@ public class SPUtils {
         Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
 
         editor.putLong(key, value);
-        editor.commit();
+        editor.apply();
     }
 
     public static String getString(Context context, String key, String defValue) {
@@ -60,13 +60,13 @@ public class SPUtils {
     public static void putString(Context context, String key, String value) {
         Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putString(key, value);
-        editor.commit();
+        editor.apply();
     }
 
     public static void remove(Context context, String key) {
         Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.remove(key);
-        editor.commit();
+        editor.apply();
     }
 
     public static void saveObject(Context context, String key, Object object) {
@@ -78,7 +78,7 @@ public class SPUtils {
             String oAuth_Base64 = new String(Base64.encode(baos.toByteArray(), Base64.DEFAULT));
             Editor editor = preferences.edit();
             editor.putString(key, oAuth_Base64);
-            editor.commit();
+            editor.apply();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -89,7 +89,7 @@ public class SPUtils {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         Object object = null;
         String string = preferences.getString(key, "");
-        if (string == "") {
+        if (string.isEmpty()) {
             return null;
         }
         byte[] base64 = Base64.decode(string.getBytes(), Base64.DEFAULT);
@@ -107,6 +107,7 @@ public class SPUtils {
         try {
             PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(listener);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -114,6 +115,7 @@ public class SPUtils {
         try {
             PreferenceManager.getDefaultSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(listener);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

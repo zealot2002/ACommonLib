@@ -1,4 +1,4 @@
-package com.zzy.commonlib.utils;
+package com.zzy.commonlib.utils.encryptUtils;
 
 
 import android.util.Log;
@@ -14,8 +14,8 @@ import javax.crypto.spec.DESKeySpec;
  * DES加密算法工具类
  */
 
-public class DESCryptUtils {
-    private static final String TAG = "DESCryptUtils";
+public class DESUtils {
+    private static final String TAG = "DESUtils";
 
     /**
      * 数据加密，算法（DES）

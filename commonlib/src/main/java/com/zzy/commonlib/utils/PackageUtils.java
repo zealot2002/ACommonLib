@@ -52,21 +52,4 @@ public class PackageUtils {
     public static boolean isQQAvailable(Context context) {
         return isPackageAvailable(context, "com.tencent.mobileqq");
     }
-
-
-/**
- * 几个常用的package有：
- 新浪微博（编辑界面）：
- com.sina.weibo
- com.sina.weibo.EditActivity
- 腾讯微博（编辑界面）：
- com.tencent.WBlog
- com.tencent.WBlog.activity.MicroblogInput
- 微信：
- com.tencent.mm
- com.tencent.mm.ui.LauncherUI
- QQ:
- com.tencent.mobileqq
- com.tencent.mobileqq.activity.HomeActivity
- */
 }
