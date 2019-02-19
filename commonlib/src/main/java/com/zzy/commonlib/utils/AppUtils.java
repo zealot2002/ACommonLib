@@ -119,7 +119,7 @@ public final class AppUtils {
         throw new NullPointerException("u should init first");
     }
 
-    private static ActivityLifecycleImpl getActivityLifecycle() {
+    public static ActivityLifecycleImpl getActivityLifecycle() {
         return ACTIVITY_LIFECYCLE;
     }
 
