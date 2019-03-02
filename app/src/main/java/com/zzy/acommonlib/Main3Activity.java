@@ -8,13 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends Activity{
+public class Main3Activity extends Activity{
     private static final String TAG = "MainActivity";
 
     private Button btnGo;
+    private Context context;
     private TextView tvText;
 
-    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,11 +28,10 @@ public class MainActivity extends Activity{
             @Override
             public void onClick(View v) {
                 Intent it = new Intent();
-                it.setClass(context,Main2Activity.class);
+                it.setClass(context,MainActivity.class);
                 startActivity(it);
             }
         });
     }
-
 
 }

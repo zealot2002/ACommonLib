@@ -47,6 +47,7 @@ import java.util.Set;
  * </pre>
  */
 public final class AppUtils {
+    private static final String TAG = "AppUtils";
 
     @SuppressLint("StaticFieldLeak")
     private static Application sApplication;
@@ -83,6 +84,10 @@ public final class AppUtils {
                 sApplication.registerActivityLifecycleCallbacks(ACTIVITY_LIFECYCLE);
             }
         }
+    }
+
+    public static void addOnAppStatusChangedListener(OnAppStatusChangedListener listener){
+        ACTIVITY_LIFECYCLE.addOnAppStatusChangedListener(null,listener);
     }
 
     /**
