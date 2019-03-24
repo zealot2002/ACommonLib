@@ -21,8 +21,9 @@ public class HAdapter {
                 .connectTimeout(ctx.getTimerout(), TimeUnit.SECONDS)
                 .readTimeout(ctx.getTimerout(), TimeUnit.SECONDS)
                 .writeTimeout(ctx.getTimerout(),TimeUnit.SECONDS)
+                .addInterceptor(new RetryInterceptor(ctx.getRetryCount()))
                 .build();
-        Request request = null;
+        Request request;
 
         if(ctx.getHeaderMap()!=null){
             request = new Request.Builder()
@@ -47,6 +48,7 @@ public class HAdapter {
                 .connectTimeout(ctx.getTimerout(), TimeUnit.SECONDS)
                 .readTimeout(ctx.getTimerout(), TimeUnit.SECONDS)
                 .writeTimeout(ctx.getTimerout(),TimeUnit.SECONDS)
+                .addInterceptor(new RetryInterceptor(ctx.getRetryCount()))
                 .build();
 
         Request request;
@@ -54,12 +56,12 @@ public class HAdapter {
             request = new Request.Builder()
                     .url(ctx.getUrl())
                     .headers(Headers.of(ctx.getHeaderMap()))
-                    .post(RequestBody.create(MediaType.parse(ctx.getContentType()),ctx.getBody().toString()))
+                    .post(RequestBody.create(MediaType.parse(ctx.getContentType()),ctx.getBody()))
                     .build();
         }else{
             request = new Request.Builder()
                     .url(ctx.getUrl())
-                    .post(RequestBody.create(MediaType.parse(ctx.getContentType()),ctx.getBody().toString()))
+                    .post(RequestBody.create(MediaType.parse(ctx.getContentType()),ctx.getBody()))
                     .build();
         }
         Response response = client.newCall(request).execute();

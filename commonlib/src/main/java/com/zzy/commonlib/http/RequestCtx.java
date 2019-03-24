@@ -1,6 +1,7 @@
 package com.zzy.commonlib.http;
 
 import android.text.TextUtils;
+
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -20,6 +21,7 @@ public class RequestCtx {
     private final HInterface.Interceptor interceptor;
     private final int timerout;
     private final Object tagObj;
+    private final int retryCount;
 
     public RequestCtx(Builder b) {
         url = b.url;
@@ -35,6 +37,7 @@ public class RequestCtx {
         interceptor = b.interceptor;
         timerout = b.timerout;
         tagObj = b.tagObj;
+        retryCount =b.retryCount;
     }
 
     public String getUrl() {
@@ -89,6 +92,10 @@ public class RequestCtx {
         return tagObj;
     }
 
+    public int getRetryCount() {
+        return retryCount;
+    }
+
     public static class Builder {
         private String url;
         private String method;
@@ -103,6 +110,8 @@ public class RequestCtx {
         private HInterface.Interceptor interceptor;
         private int timerout;
         private Object tagObj;
+        private int retryCount;
+
 
         public Builder(String url) {
             this.url = url;
@@ -166,6 +175,11 @@ public class RequestCtx {
 
         public Builder tagObj(Object val) {
             tagObj = val;
+            return this;
+        }
+
+        public Builder retryCount(int count) {
+            retryCount = count;
             return this;
         }
 
