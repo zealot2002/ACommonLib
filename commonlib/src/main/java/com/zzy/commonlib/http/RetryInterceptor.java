@@ -17,14 +17,19 @@ public class RetryInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request request = chain.request();
-        //System.out.println("retryNum=" + retryNum);
-        Response response = chain.proceed(request);
-        while (!response.isSuccessful() && retryNum < maxRetry) {
-            retryNum++;
+        try{
+            Request request = chain.request();
             //System.out.println("retryNum=" + retryNum);
-            response = chain.proceed(request);
+            Response response = chain.proceed(request);
+            while (!response.isSuccessful() && retryNum < maxRetry) {
+                retryNum++;
+                //System.out.println("retryNum=" + retryNum);
+                response = chain.proceed(request);
+            }
+            return response;
+        }catch(Exception e){
+            e.printStackTrace();
         }
-        return response;
+        return chain.proceed(chain.request());
     }
 }

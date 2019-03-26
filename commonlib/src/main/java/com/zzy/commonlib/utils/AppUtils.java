@@ -69,6 +69,7 @@ public final class AppUtils {
      * @param app application
      */
     public static void init(final Application app) {
+        Log.e(TAG," init currentProcessName:"+ProcessUtils.getCurrentProcessName(app));
         if (sApplication == null) {
             if (app == null) {
                 sApplication = getApplicationByReflect();
