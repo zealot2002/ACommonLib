@@ -134,12 +134,8 @@ public final class AppUtils {
     }
 
     public static Context getTopActivityOrApp() {
-        if (isAppForeground()) {
-            Activity topActivity = ACTIVITY_LIFECYCLE.getTopActivity();
-            return topActivity == null ? AppUtils.getApp() : topActivity;
-        } else {
-            return AppUtils.getApp();
-        }
+        Activity topActivity = ACTIVITY_LIFECYCLE.getTopActivity();
+        return topActivity == null ? AppUtils.getApp() : topActivity;
     }
 
     public static boolean isAppForeground() {
