@@ -22,7 +22,7 @@ public class HAdapter {
     private static OkHttpClient okHttpClient;
 
 /*******************************************************************************************************/
-    public static String sendGetRequest(RequestCtx ctx) throws Exception {
+    public static Object[] sendGetRequest(RequestCtx ctx) throws Exception {
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(ctx.getTimerout(), TimeUnit.SECONDS)
                 .readTimeout(ctx.getTimerout(), TimeUnit.SECONDS)
@@ -46,10 +46,10 @@ public class HAdapter {
         if (!response.isSuccessful())
             throw new IOException("Unexpected code " + response);
 
-        return handleServerData(response.body().string(),response.code(),ctx);
+        return handleServerData(response.body().string(),response.code(),response.receivedResponseAtMillis(),ctx);
     }
 
-    synchronized public static String sendPostRequest(RequestCtx ctx) throws Exception {
+    synchronized public static Object[] sendPostRequest(RequestCtx ctx) throws Exception {
         if(okHttpClient == null){
             okHttpClient = new OkHttpClient.Builder()
                     .connectTimeout(ctx.getTimerout(), TimeUnit.SECONDS)
@@ -78,25 +78,22 @@ public class HAdapter {
         if (!response.isSuccessful())
             throw new IOException("Unexpected code " + response);
 
-        return handleServerData(response.body().string(),response.code(),ctx);
+        return handleServerData(response.body().string(),response.code(),response.receivedResponseAtMillis(),ctx);
     }
 
-    private static String handleServerData(String strResult, int statusCode, RequestCtx ctx){
+    //Object[0] time
+    //Object[1] response or errorCode
+    private static Object[] handleServerData(String strResult, int statusCode, long receiveTime,RequestCtx ctx){
         /** 服务器返回数据 **/
-        if(strResult.contains(HConstant.HTML_DATA_PRE)){
-            return HConstant.HTML_DATA_ERROR;
-        }
-        if(TextUtils.isEmpty(strResult)||strResult.equals("null")){
-            return HConstant.EMPTY_DATA_ERROR;
-        }
+        String ret = strResult;
         if (statusCode == 200) {
             /** 解密数据 **/
             if(ctx.getDecrypter()!=null){
-                return ctx.getDecrypter().decrypt(strResult);
+                ret = ctx.getDecrypter().decrypt(strResult);
             }
-            return strResult;
+            return new Object[]{receiveTime,ret};
         } else {
-            return HConstant.HTTP_ERROR + statusCode;
+            return new Object[]{receiveTime,HConstant.HTTP_ERROR + statusCode};
         }
     }
 }

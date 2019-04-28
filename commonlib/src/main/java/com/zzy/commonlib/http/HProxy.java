@@ -53,16 +53,16 @@ public class HProxy {
         }
 
         public void run() {
-            String retString = null;
-            boolean hasException = false;
+            Object[] responseObjs = null;
             Object[] objs = new Object[3]; //0:成功还是失败；1:数据；2:请求者携带tag
             objs[2] = ctx.getTagObj();
+            boolean hasException = false;
             try {
 //                Log.e(TAG,"请求服务 url:"+ctx.getUrl());
                 if(ctx.getMethod().equals(HConstant.HTTP_METHOD_GET)){
-                    retString = HAdapter.sendGetRequest(ctx);
+                    responseObjs = HAdapter.sendGetRequest(ctx);
                 }else if(ctx.getMethod().equals(HConstant.HTTP_METHOD_POST)){
-                    retString = HAdapter.sendPostRequest(ctx);
+                    responseObjs = HAdapter.sendPostRequest(ctx);
                 }/*else if(ctx.getMethod().equals(HConstant.HTTP_METHOD_PUT)){
                     retString = HAdapter.sendPutRequest(ctx);
                 }else if(ctx.getMethod().equals(HConstant.HTTP_METHOD_DEL)){
@@ -72,15 +72,14 @@ public class HProxy {
 //                if(ctx.getDecrypter()!=null){
 //                    retString = ctx.getDecrypter().decrypt(retString);
 //                }
-                if(retString.equals(HConstant.HTML_DATA_ERROR)
-                        ||retString.equals(HConstant.EMPTY_DATA_ERROR)
-                        ||retString.contains(HConstant.HTTP_ERROR)){
+                if(((String) responseObjs[1]).contains(HConstant.HTTP_ERROR)){
                     hasException = true;
-                    objs[1] = retString;
+                    objs[1] = responseObjs[1];
                 }else{
                     //拦截
                     if(ctx.getInterceptor()!=null
-                            &&ctx.getInterceptor().intercept(retString)
+                            &&ctx.getInterceptor().intercept((long)responseObjs[0],
+                                                (String)responseObjs[1],ctx.getTagObj())
                             ){
                             //被拦截直接返回
                             handler.sendMessage(handler.obtainMessage(HConstant.INTERCEPTED, objs));
@@ -88,7 +87,7 @@ public class HProxy {
                     }
                     //解析
                     if(ctx.getJsonParser()!=null){
-                        Object[] tmpObjs = ctx.getJsonParser().parse(retString);
+                        Object[] tmpObjs = ctx.getJsonParser().parse((String) responseObjs[1]);
                         objs[0] = tmpObjs[0];
                         objs[1] = tmpObjs[1];  
                         if(objs[0].equals(HConstant.SUCCESS)){

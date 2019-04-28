@@ -20,6 +20,6 @@ public interface HInterface {
     }
 
     interface Interceptor {
-        boolean intercept(String str) throws Exception;
+        boolean intercept(long receiveTime, String retString, Object tagObj);
     }
 }
