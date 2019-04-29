@@ -1,6 +1,7 @@
 package com.zzy.commonlib.http;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
@@ -22,13 +23,14 @@ public class HProxy {
     }
 
     public void request(RequestCtx ctx) throws Exception {
-        final BaseHandler handler = new BaseHandler(ctx);
+        final BaseHandler handler = new BaseHandler(ctx,Looper.getMainLooper());
         final BaseTask taskThread = new BaseTask(ctx, handler);
         ThreadPool.getInstance().getPool().execute(taskThread);
     }
     static class BaseHandler extends Handler {
         private RequestCtx ctx;
-        public BaseHandler(RequestCtx ctx) {
+        public BaseHandler(RequestCtx ctx, Looper looper) {
+            super(looper);
             this.ctx = ctx;
         }
 
