@@ -56,7 +56,7 @@ public class HProxy {
             Object[] responseObjs = null;
             Object[] objs = new Object[3]; //0:成功还是失败；1:数据；2:请求者携带tag
             objs[2] = ctx.getTagObj();
-            boolean hasException = false;
+            int retState = HConstant.SUCCESS; //0:normal;    -1:exception;   2:intercepted
             try {
 //                Log.e(TAG,"请求服务 url:"+ctx.getUrl());
                 if(ctx.getMethod().equals(HConstant.HTTP_METHOD_GET)){
@@ -73,7 +73,7 @@ public class HProxy {
 //                    retString = ctx.getDecrypter().decrypt(retString);
 //                }
                 if(((String) responseObjs[1]).contains(HConstant.HTTP_ERROR)){
-                    hasException = true;
+                    retState = HConstant.FAIL;
                     objs[1] = responseObjs[1];
                 }else{
                     //拦截
@@ -82,7 +82,8 @@ public class HProxy {
                                                 (String)responseObjs[1],ctx.getTagObj())
                             ){
                             //被拦截直接返回
-                            handler.sendMessage(handler.obtainMessage(HConstant.INTERCEPTED, objs));
+//                            handler.sendMessage(handler.obtainMessage(HConstant.INTERCEPTED, objs));
+                            retState = HConstant.INTERCEPTED;
                             return;
                     }
                     //解析
@@ -95,33 +96,29 @@ public class HProxy {
                                 ctx.getValidator().validate(objs[1]);
                             }
                         }else{
-                            hasException = true;
+                            retState = HConstant.FAIL;
                         }
                     }
                 }
             }catch(NetDataInvalidException ne){
                 ne.printStackTrace();
-                hasException = true;
+                retState = HConstant.FAIL;
                 objs[1] = ne.toString();
             }catch(JSONException je){
                 je.printStackTrace();
-                hasException = true;
+                retState = HConstant.FAIL;
                 objs[1] = je.toString();
             }catch(IOException ioe){
                 ioe.printStackTrace();
-                hasException = true;
+                retState = HConstant.FAIL;
                 objs[1] = ioe.toString();
             }catch (Exception e) {
                 e.printStackTrace();
-                hasException = true;
+                retState = HConstant.FAIL;
                 objs[1] = e.toString();
             }finally{
                 if(ctx.getCallback()!=null){
-                    if(hasException){
-                        handler.sendMessage(handler.obtainMessage(HConstant.FAIL, objs));
-                    }else{
-                        handler.sendMessage(handler.obtainMessage(HConstant.SUCCESS, objs));
-                    }
+                    handler.sendMessage(handler.obtainMessage(retState, objs));
                 }
             }
         }
