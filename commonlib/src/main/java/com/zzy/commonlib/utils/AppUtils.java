@@ -370,7 +370,8 @@ public final class AppUtils {
         Log.e("ActivityManager", "app exit" );
         try {
             finishAllActivity();
-            Runtime.getRuntime().exit(0);
+//            Runtime.getRuntime().exit(0);
+            android.os.Process.killProcess(android.os.Process.myPid());
         } catch (Exception e) {
             Log.e("ActivityManager", "app exit" + e.getMessage());
         }
