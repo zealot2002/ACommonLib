@@ -76,9 +76,15 @@ public class HAdapter {
         }
         Response response = okHttpClient.newCall(request).execute();
 
-        long responseTime = Long.valueOf(response.header("X-Timestamp"));
-        if (!response.isSuccessful())
+        if (!response.isSuccessful()) {
             throw new IOException("Unexpected code " + response);
+        }
+        long responseTime = 0;
+        try{
+            responseTime = Long.valueOf(response.header("X-Timestamp"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         return handleServerData(response.body().string(),response.code(),responseTime,ctx);
     }
