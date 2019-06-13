@@ -210,7 +210,7 @@ public final class AppUtils {
         public void onActivityDestroyed(Activity activity) {
             mActivityList.remove(activity);
             consumeOnActivityDestroyedListener(activity);
-            fixSoftInputLeaks(activity);
+//            fixSoftInputLeaks(activity);
         }
 
         Activity getTopActivity() {
