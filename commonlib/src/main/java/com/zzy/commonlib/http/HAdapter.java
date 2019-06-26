@@ -83,7 +83,6 @@ public class HAdapter {
         try{
             responseTime = Long.valueOf(response.header("X-Timestamp"));
         }catch (Exception e){
-            e.printStackTrace();
         }
 
         return handleServerData(response.body().string(),response.code(),responseTime,ctx);
