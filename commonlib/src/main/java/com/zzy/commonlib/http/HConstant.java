@@ -3,6 +3,7 @@ package com.zzy.commonlib.http;
 public class HConstant {
     public static final int SUCCESS = 0;
     public static final int FAIL = -1;
+    public static final int ERROR = -2;
     public static final int INTERCEPTED = 2;
 
     public static final String HTTP_METHOD_GET = "get";
