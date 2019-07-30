@@ -98,7 +98,7 @@ public class HProxy {
                                 ctx.getValidator().validate(objs[1]);
                             }
                         }else{
-                            retState = objs[0];
+                            retState = (int) objs[0];
                         }
                     }
                 }
