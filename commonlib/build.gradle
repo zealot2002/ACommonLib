@@ -22,4 +22,7 @@ dependencies {
     compile 'com.lovedise:permissiongen:0.0.6'
     //屏幕适配
     compile 'com.zhy:autolayout:1.4.5'
+
+    // permission
+    compile 'com.yanzhenjie:permission:2.0.0-rc12'
 }

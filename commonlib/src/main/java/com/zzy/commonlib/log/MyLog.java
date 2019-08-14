@@ -1,4 +1,5 @@
 package com.zzy.commonlib.log;
+import android.content.Context;
 import android.util.Log;
 
 /**
@@ -40,10 +41,17 @@ public class MyLog {
         Log.d(tag, s);
     }
 
-    public static void setLogEnable(boolean b){
-        enable = b;
+    public static void init(boolean bOpen, Context context,String logName) {
+        enable = bOpen;
+        if(enable){
+            LogcatHelper.getInstance().init(context,logName);
+            LogcatHelper.getInstance().start();
+        }
     }
 
+    public static void exit(){
+        LogcatHelper.getInstance().stop();
+    }
     private static String generateTag() {
         StackTraceElement caller = new Throwable().getStackTrace()[2];
         String tag = "%s.%s(L:%d)";
